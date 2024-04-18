@@ -1,4 +1,4 @@
-package original;
+package ex2;
 
 /*============================================================================
 Name        : LinkedList.java
@@ -26,21 +26,6 @@ class LinkedList
     private static Node head;
     private static int numNodes;
 
-    public static void main(String [] args)
-    {
-        System.out.println("/=/=/=/= TESTING /=/=/=/=");
-        LinkedList ll = new LinkedList(10);
-        ll.addAtHead(11);
-        ll.addAtHead(12);
-        ll.addAtHead(13);
-        ll.addAtTail(8);
-        ll.addAtTail(7);
-        ll.addAtIndex(4,9);
-        ll.addAtIndex(4,9);
-        ll.deleteAtIndex(4);
-        ll.printList();
-    }
-
     public LinkedList(Object dat)
     {
         head = new Node(dat);
@@ -66,27 +51,35 @@ class LinkedList
         numNodes++;
     }
 
-    public void addAtIndex(int index, Object dat)
-    {
-        Node temp = head;
-        Node holder;
-        for(int i=0; i < index && temp.next != null; i++)
-        {
-            temp = temp.next;
-        }
-        holder = temp.next;
-        temp.next = new Node(dat);
-        temp.next.next = holder;
-        numNodes++;
-    }
-
-    public void deleteAtIndex(int index)
+    public Node getPrevious(int index)
     {
         Node temp = head;
         for(int i=0; i< index - 1 && temp.next != null; i++)
         {
             temp = temp.next;
         }
+        return temp;
+    }
+
+    public void addAtIndex(int index, Object dat)
+    {
+        Node temp = head;
+        Node holder;
+        // use getPrevious(index) to get the previous node
+        temp = getPrevious(index);
+        holder = temp.next;
+        temp.next = new Node(dat);
+        temp.next.next = holder;
+        numNodes++;
+    }
+
+
+
+    public void deleteAtIndex(int index)
+    {
+        Node temp = head;
+        // use getPrevious(index) to get the previous node
+        temp = getPrevious(index);
         temp.next = temp.next.next;
         numNodes--;
     }
@@ -145,3 +138,4 @@ class LinkedList
         }
     }
 }
+
